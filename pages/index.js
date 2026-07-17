@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { TEMPLATES, buildSignatureHtml } from "../lib/templates";
 
@@ -22,6 +22,10 @@ const LABEL_STYLE = {
   display: "block",
 };
 
+const STORAGE_KEY = "signature_data";
+const TEMPLATE_KEY = "signature_template";
+const DIRECTION_KEY = "signature_direction";
+
 export default function Home() {
   const { data: session, status } = useSession();
 
@@ -42,9 +46,58 @@ export default function Home() {
   });
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  // تحميل البيانات من localStorage عند تحميل الصفحة
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      const savedTemplate = localStorage.getItem(TEMPLATE_KEY);
+      const savedDirection = localStorage.getItem(DIRECTION_KEY);
+
+      if (savedData) {
+        try {
+          setData(JSON.parse(savedData));
+        } catch (e) {
+          console.error("Error parsing saved data:", e);
+        }
+      }
+
+      if (savedTemplate) {
+        setTemplateId(savedTemplate);
+      }
+
+      if (savedDirection) {
+        setDirection(savedDirection);
+      }
+
+      setLoaded(true);
+    }
+  }, []);
 
   function update(field, value) {
-    setData((d) => ({ ...d, [field]: value }));
+    setData((d) => {
+      const newData = { ...d, [field]: value };
+      // حفظ البيانات فوراً في localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+      }
+      return newData;
+    });
+  }
+
+  function handleTemplateChange(id) {
+    setTemplateId(id);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(TEMPLATE_KEY, id);
+    }
+  }
+
+  function handleDirectionChange(dir) {
+    setDirection(dir);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(DIRECTION_KEY, dir);
+    }
   }
 
   const html = buildSignatureHtml(templateId, data, direction);
@@ -62,10 +115,37 @@ export default function Home() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error?.error?.message || JSON.stringify(json.error) || "خطأ");
       setMessage({ ok: true, text: `✅ تم تفعيل التوقيع على ${json.email}` });
+      // البيانات محفوظة تلقائياً
     } catch (err) {
       setMessage({ ok: false, text: "❌ خطأ: " + err.message });
     } finally {
       setBusy(false);
+    }
+  }
+
+  function clearData() {
+    if (confirm("هل تريد حذف جميع البيانات المحفوظة؟")) {
+      setData({
+        name: "",
+        title: "",
+        phone: "",
+        email: "",
+        website: "",
+        instagram: "",
+        linkedin: "",
+        twitter: "",
+        facebook: "",
+        logoUrl: "",
+        dotUrl: "",
+      });
+      if (typeof window !== "undefined") {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(TEMPLATE_KEY);
+        localStorage.removeItem(DIRECTION_KEY);
+      }
+      setTemplateId("luxury-gold");
+      setDirection("rtl");
+      setMessage({ ok: true, text: "✅ تم حذف البيانات بنجاح" });
     }
   }
 
@@ -85,6 +165,14 @@ export default function Home() {
     flexDirection: isRtl ? "row-reverse" : "row",
     gap: 16,
   };
+
+  if (!loaded) {
+    return (
+      <div style={containerStyle}>
+        <p style={{ color: "#6b7280" }}>⏳ جاري التحميل...</p>
+      </div>
+    );
+  }
 
   return (
     <div style={containerStyle}>
@@ -171,7 +259,7 @@ export default function Home() {
                 {TEMPLATES.map((t) => (
                   <button
                     key={t.id}
-                    onClick={() => setTemplateId(t.id)}
+                    onClick={() => handleTemplateChange(t.id)}
                     style={{
                       ...FIELD_STYLE,
                       border: templateId === t.id ? "2px solid #667eea" : "1px solid #e5e7eb",
@@ -191,7 +279,7 @@ export default function Home() {
               <h3 className="section-title">اتجاه النص</h3>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 <button
-                  onClick={() => setDirection("rtl")}
+                  onClick={() => handleDirectionChange("rtl")}
                   style={{
                     ...FIELD_STYLE,
                     border: direction === "rtl" ? "2px solid #667eea" : "1px solid #e5e7eb",
@@ -203,7 +291,7 @@ export default function Home() {
                   🇸🇦 RTL (عربي)
                 </button>
                 <button
-                  onClick={() => setDirection("ltr")}
+                  onClick={() => handleDirectionChange("ltr")}
                   style={{
                     ...FIELD_STYLE,
                     border: direction === "ltr" ? "2px solid #667eea" : "1px solid #e5e7eb",
@@ -335,10 +423,29 @@ export default function Home() {
                   borderRadius: 6,
                   cursor: busy ? "not-allowed" : "pointer",
                   opacity: busy ? 0.6 : 1,
+                  marginBottom: "10px",
                 }}
               >
                 {busy ? "⏳ جاري التفعيل..." : "🚀 تفعيل على Gmail"}
               </button>
+
+              <button
+                onClick={clearData}
+                style={{
+                  width: "100%",
+                  padding: "10px 24px",
+                  fontSize: 13,
+                  fontWeight: "500",
+                  background: "#f3f4f6",
+                  color: "#dc2626",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: 6,
+                  cursor: "pointer",
+                }}
+              >
+                🗑️ حذف البيانات المحفوظة
+              </button>
+
               {message && (
                 <p style={{
                   marginTop: 12,
@@ -353,6 +460,18 @@ export default function Home() {
                   {message.text}
                 </p>
               )}
+
+              <p style={{
+                marginTop: 16,
+                fontSize: 11,
+                color: "#6b7280",
+                padding: "12px",
+                background: "#f9fafb",
+                borderRadius: 4,
+                textAlign: "center",
+              }}>
+                💾 البيانات تُحفظ تلقائياً أثناء الكتابة
+              </p>
             </div>
           </div>
 
@@ -365,7 +484,7 @@ export default function Home() {
                 borderRadius: 8,
                 padding: 20,
                 background: "#fafafa",
-                minHeight: 300,
+                minHeight: 400,
                 overflow: "auto",
               }}>
                 <div dangerouslySetInnerHTML={{ __html: html }} />
