@@ -11,12 +11,22 @@ const FIELD_STYLE = {
   borderRadius: "6px",
   fontSize: "14px",
   boxSizing: "border-box",
+  fontFamily: "inherit",
+};
+
+const LABEL_STYLE = {
+  fontSize: "13px",
+  fontWeight: "500",
+  color: "#333",
+  marginBottom: "4px",
+  display: "block",
 };
 
 export default function Home() {
   const { data: session, status } = useSession();
 
-  const [templateId, setTemplateId] = useState("gold-minimal");
+  const [templateId, setTemplateId] = useState("luxury-gold");
+  const [direction, setDirection] = useState("rtl");
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -24,6 +34,9 @@ export default function Home() {
     email: "",
     website: "",
     instagram: "",
+    linkedin: "",
+    twitter: "",
+    facebook: "",
     logoUrl: "",
     dotUrl: "",
   });
@@ -34,7 +47,8 @@ export default function Home() {
     setData((d) => ({ ...d, [field]: value }));
   }
 
-  const html = buildSignatureHtml(templateId, data);
+  const html = buildSignatureHtml(templateId, data, direction);
+  const isRtl = direction === "rtl";
 
   async function activate() {
     setBusy(true);
@@ -47,53 +61,123 @@ export default function Home() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error?.error?.message || JSON.stringify(json.error) || "خطأ");
-      setMessage({ ok: true, text: `تفعّل التوقيع على ${json.email} ✅` });
+      setMessage({ ok: true, text: `✅ تم تفعيل التوقيع على ${json.email}` });
     } catch (err) {
-      setMessage({ ok: false, text: "وقع خطأ: " + err.message });
+      setMessage({ ok: false, text: "❌ خطأ: " + err.message });
     } finally {
       setBusy(false);
     }
   }
 
+  const containerStyle = {
+    direction: isRtl ? "rtl" : "ltr",
+    fontFamily: "'Segoe UI', Tahoma, Arial, sans-serif",
+    maxWidth: 1000,
+    margin: "0 auto",
+    padding: "24px 16px",
+  };
+
+  const headerStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+    flexDirection: isRtl ? "row-reverse" : "row",
+    gap: 16,
+  };
+
   return (
-    <div dir="rtl" style={{ fontFamily: "Tahoma, Arial, sans-serif", maxWidth: 960, margin: "0 auto", padding: "24px 16px" }}>
-      <h1 style={{ fontSize: 22 }}>مبدّل توقيعات Gmail</h1>
+    <div style={containerStyle}>
+      <style>{`
+        * { box-sizing: border-box; }
+        button { cursor: pointer; transition: all 0.2s; }
+        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        button:disabled { opacity: 0.6; }
+        input, textarea { font-family: inherit; }
+        .section { margin-bottom: 28px; }
+        .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #1f2937; }
+        .template-btn { padding: "8px 14px"; border-radius: "20px"; border: "1px solid #e5e7eb"; background: "#fff"; font-size: "13px"; transition: "all 0.2s"; }
+        .success { color: #059669; }
+        .error { color: #dc2626; }
+      `}</style>
 
-      {status === "loading" && <p>...جاري التحميل</p>}
+      <div style={headerStyle}>
+        <h1 style={{ fontSize: 26, margin: 0, color: "#1f2937" }}>✨ مبدّل التوقيعات</h1>
+        {session && (
+          <div style={{ display: "flex", gap: 12, alignItems: "center", flexDirection: isRtl ? "row-reverse" : "row" }}>
+            <span style={{ fontSize: 13, color: "#6b7280" }}>
+              {session.user.email}
+            </span>
+            <button 
+              onClick={() => signOut()} 
+              style={{
+                fontSize: 12,
+                padding: "6px 12px",
+                background: "#f3f4f6",
+                border: "1px solid #e5e7eb",
+                borderRadius: 4,
+              }}
+            >
+              تسجيل الخروج
+            </button>
+          </div>
+        )}
+      </div>
 
-      {!session && (
-        <div>
-          <p style={{ color: "#555" }}>سجل الدخول بحساب Google باش تربط Gmail تاعك.</p>
-          <button onClick={() => signIn("google")} style={{ padding: "10px 18px", fontSize: 14, cursor: "pointer" }}>
-            تسجيل الدخول بـ Google
+      {status === "loading" && (
+        <div style={{ textAlign: "center", padding: "40px 20px" }}>
+          <p style={{ color: "#6b7280" }}>⏳ جاري التحميل...</p>
+        </div>
+      )}
+
+      {!session && status !== "loading" && (
+        <div style={{
+          background: "#f0f9ff",
+          border: "1px solid #bfdbfe",
+          borderRadius: 8,
+          padding: 20,
+          textAlign: "center",
+        }}>
+          <p style={{ color: "#1e40af", marginBottom: 16 }}>
+            📧 سجل الدخول بحساب Google لربط توقيعك على Gmail
+          </p>
+          <button 
+            onClick={() => signIn("google")}
+            style={{
+              padding: "10px 24px",
+              fontSize: 14,
+              fontWeight: "500",
+              background: "#3b82f6",
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              cursor: "pointer",
+            }}
+          >
+            🔐 تسجيل الدخول بـ Google
           </button>
         </div>
       )}
 
       {session && (
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-            <span style={{ fontSize: 13, color: "#555" }}>مسجل كـ {session.user.email}</span>
-            <button onClick={() => signOut()} style={{ fontSize: 12, cursor: "pointer" }}>تسجيل الخروج</button>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 24 }}>
-
-            {/* Template picker */}
-            <div>
-              <h3 style={{ fontSize: 15, marginBottom: 8 }}>اختار التصميم</h3>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isRtl ? "1fr 1fr" : "1fr 1fr", gap: 28 }}>
+          
+          {/* Left Column - Controls */}
+          <div>
+            {/* Template Selection */}
+            <div className="section">
+              <h3 className="section-title">اختر التصميم</h3>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 {TEMPLATES.map((t) => (
                   <button
                     key={t.id}
                     onClick={() => setTemplateId(t.id)}
                     style={{
-                      padding: "8px 14px",
-                      borderRadius: 20,
-                      border: templateId === t.id ? "2px solid #b08d4f" : "1px solid #ccc",
-                      background: templateId === t.id ? "#faf6ec" : "#fff",
-                      cursor: "pointer",
-                      fontSize: 13,
+                      ...FIELD_STYLE,
+                      border: templateId === t.id ? "2px solid #667eea" : "1px solid #e5e7eb",
+                      background: templateId === t.id ? "#f0f4ff" : "#fff",
+                      fontWeight: templateId === t.id ? "600" : "500",
+                      color: templateId === t.id ? "#667eea" : "#6b7280",
                     }}
                   >
                     {t.label}
@@ -102,68 +186,191 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Form */}
-            <div>
-              <h3 style={{ fontSize: 15, marginBottom: 8 }}>معلوماتك</h3>
-              <label>الاسم الكامل</label>
-              <input style={FIELD_STYLE} value={data.name} onChange={(e) => update("name", e.target.value)} placeholder="مثال: ندير بن..." />
+            {/* Direction Toggle */}
+            <div className="section">
+              <h3 className="section-title">اتجاه النص</h3>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                <button
+                  onClick={() => setDirection("rtl")}
+                  style={{
+                    ...FIELD_STYLE,
+                    border: direction === "rtl" ? "2px solid #667eea" : "1px solid #e5e7eb",
+                    background: direction === "rtl" ? "#f0f4ff" : "#fff",
+                    fontWeight: direction === "rtl" ? "600" : "500",
+                    color: direction === "rtl" ? "#667eea" : "#6b7280",
+                  }}
+                >
+                  🇸🇦 RTL (عربي)
+                </button>
+                <button
+                  onClick={() => setDirection("ltr")}
+                  style={{
+                    ...FIELD_STYLE,
+                    border: direction === "ltr" ? "2px solid #667eea" : "1px solid #e5e7eb",
+                    background: direction === "ltr" ? "#f0f4ff" : "#fff",
+                    fontWeight: direction === "ltr" ? "600" : "500",
+                    color: direction === "ltr" ? "#667eea" : "#6b7280",
+                  }}
+                >
+                  🇬🇧 LTR (English)
+                </button>
+              </div>
+            </div>
 
-              <label>المسمى / الخدمة</label>
-              <input style={FIELD_STYLE} value={data.title} onChange={(e) => update("title", e.target.value)} placeholder="مطوّر ومصمم مواقع" />
+            {/* Form Fields */}
+            <div className="section">
+              <h3 className="section-title">معلوماتك الشخصية</h3>
 
-              <label>الهاتف</label>
-              <input style={FIELD_STYLE} value={data.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+213 5XX XX XX XX" />
+              <label style={LABEL_STYLE}>الاسم الكامل</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.name}
+                onChange={(e) => update("name", e.target.value)}
+                placeholder="مثال: أحمد محمد"
+              />
 
-              <label>الإيميل</label>
-              <input style={FIELD_STYLE} value={data.email} onChange={(e) => update("email", e.target.value)} placeholder="votre@email.com" />
+              <label style={LABEL_STYLE}>المسمى الوظيفي</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.title}
+                onChange={(e) => update("title", e.target.value)}
+                placeholder="مثال: مهندس برمجيات"
+              />
 
-              <label>الموقع</label>
-              <input style={FIELD_STYLE} value={data.website} onChange={(e) => update("website", e.target.value)} placeholder="votresite.com" />
+              <label style={LABEL_STYLE}>رقم الهاتف</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.phone}
+                onChange={(e) => update("phone", e.target.value)}
+                placeholder="+213 5XX XX XX XX"
+              />
 
-              <label>انستغرام (اختياري)</label>
-              <input style={FIELD_STYLE} value={data.instagram} onChange={(e) => update("instagram", e.target.value)} placeholder="@votrecompte" />
+              <label style={LABEL_STYLE}>البريد الإلكتروني</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.email}
+                onChange={(e) => update("email", e.target.value)}
+                placeholder="your@email.com"
+                type="email"
+              />
 
-              <label>رابط اللوغو (https://...) — اختياري</label>
-              <input style={FIELD_STYLE} value={data.logoUrl} onChange={(e) => update("logoUrl", e.target.value)} placeholder="https://.../logo.png" />
-              <p style={{ fontSize: 11, color: "#888", marginTop: -8 }}>
-                لازم يكون رابط مستضاف (مثلاً من موقعك أو Vercel) باش يبان عند لي يستقبل الإيميل منك.
+              <label style={LABEL_STYLE}>الموقع</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.website}
+                onChange={(e) => update("website", e.target.value)}
+                placeholder="example.com"
+              />
+
+              <label style={LABEL_STYLE}>رابط اللوغو (https://...)</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.logoUrl}
+                onChange={(e) => update("logoUrl", e.target.value)}
+                placeholder="https://example.com/logo.png"
+              />
+              <p style={{ fontSize: 11, color: "#9ca3af", margin: "4px 0 12px 0" }}>
+                ℹ️ يجب أن يكون مستضافاً (HTTPS)
               </p>
 
-              <label>رابط GIF متحرك (اختياري)</label>
-              <input style={FIELD_STYLE} value={data.dotUrl} onChange={(e) => update("dotUrl", e.target.value)} placeholder="https://.../status-dot.gif" />
+              <label style={LABEL_STYLE}>رابط GIF متحرك (اختياري)</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.dotUrl}
+                onChange={(e) => update("dotUrl", e.target.value)}
+                placeholder="https://example.com/dot.gif"
+              />
             </div>
 
-            {/* Preview */}
-            <div>
-              <h3 style={{ fontSize: 15, marginBottom: 8 }}>معاينة</h3>
-              <div style={{ border: "1px solid #e4e0d6", padding: 20, background: "#fff" }}
-                   dangerouslySetInnerHTML={{ __html: html }} />
+            {/* Social Media */}
+            <div className="section">
+              <h3 className="section-title">وسائل التواصل (اختياري)</h3>
+
+              <label style={LABEL_STYLE}>Instagram</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.instagram}
+                onChange={(e) => update("instagram", e.target.value)}
+                placeholder="@username"
+              />
+
+              <label style={LABEL_STYLE}>LinkedIn</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.linkedin}
+                onChange={(e) => update("linkedin", e.target.value)}
+                placeholder="username"
+              />
+
+              <label style={LABEL_STYLE}>Twitter</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.twitter}
+                onChange={(e) => update("twitter", e.target.value)}
+                placeholder="@username"
+              />
+
+              <label style={LABEL_STYLE}>Facebook</label>
+              <input
+                style={FIELD_STYLE}
+                value={data.facebook}
+                onChange={(e) => update("facebook", e.target.value)}
+                placeholder="username"
+              />
             </div>
 
-            <div>
+            {/* Activation Button */}
+            <div className="section">
               <button
                 onClick={activate}
                 disabled={busy}
                 style={{
+                  width: "100%",
                   padding: "12px 24px",
                   fontSize: 14,
-                  background: "#b08d4f",
+                  fontWeight: "600",
+                  background: busy ? "#d1d5db" : "#667eea",
                   color: "#fff",
                   border: "none",
                   borderRadius: 6,
-                  cursor: busy ? "default" : "pointer",
+                  cursor: busy ? "not-allowed" : "pointer",
                   opacity: busy ? 0.6 : 1,
                 }}
               >
-                {busy ? "...جاري التفعيل" : "تفعيل هذا التوقيع على Gmail"}
+                {busy ? "⏳ جاري التفعيل..." : "🚀 تفعيل على Gmail"}
               </button>
               {message && (
-                <p style={{ marginTop: 10, color: message.ok ? "#2e7d32" : "#c62828", fontSize: 13 }}>
+                <p style={{
+                  marginTop: 12,
+                  padding: "10px 12px",
+                  borderRadius: 6,
+                  background: message.ok ? "#f0fdf4" : "#fef2f2",
+                  color: message.ok ? "#059669" : "#dc2626",
+                  fontSize: 12,
+                  textAlign: "center",
+                  border: `1px solid ${message.ok ? "#bbf7d0" : "#fecaca"}`,
+                }}>
                   {message.text}
                 </p>
               )}
             </div>
+          </div>
 
+          {/* Right Column - Preview */}
+          <div>
+            <div className="section">
+              <h3 className="section-title">📋 معاينة التوقيع</h3>
+              <div style={{
+                border: "1px solid #e5e7eb",
+                borderRadius: 8,
+                padding: 20,
+                background: "#fafafa",
+                minHeight: 300,
+                overflow: "auto",
+              }}>
+                <div dangerouslySetInnerHTML={{ __html: html }} />
+              </div>
+            </div>
           </div>
         </div>
       )}
