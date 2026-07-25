@@ -10,39 +10,38 @@ export default function Header() {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 30,
-    padding: "16px 24px",
-    background: "#4285f4",
+    marginBottom: 24,
+    padding: "16px 16px",
+    background: "linear-gradient(135deg, #4285f4 0%, #1f2937 100%)",
     borderRadius: "12px",
-    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-    borderTop: "4px solid #ea4335",
-    borderRight: "4px solid #fff59d",
-    borderLeft: "4px solid #34a853",
-    borderBottom: "4px solid #ff69b4",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     gap: 16,
-    direction: "rtl",
+    direction: "ltr",
     position: "relative",
+    width: "100%",
+    maxWidth: "100%",
+    margin: "0 0 24px 0",
   };
 
   return (
     <>
       <style>{`
-        .desktop-nav { display: flex; gap: 16px; margin-right: 20px; }
+        .desktop-nav { display: flex; gap: 16px; margin-left: 20px; }
         .desktop-nav a { text-decoration: none; color: rgba(255,255,255,0.8); font-weight: 500; font-size: 15px; transition: opacity 0.2s; }
         .desktop-nav a:hover { opacity: 1; color: #ffffff; }
         
         .mobile-menu-btn { display: none; background: none; border: none; color: white; cursor: pointer; padding: 4px; font-size: 26px; line-height: 1; }
         
-        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: white; z-index: 1000; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -4px 0 15px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: white; z-index: 1000; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -4px 0 15px rgba(0,0,0,0.1); overflow-y: auto; display: flex; flex-direction: column; padding: 16px; }
         .sidebar.open { right: 0; }
         
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(2px); }
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(4px); }
         .sidebar-overlay.open { opacity: 1; visibility: visible; }
         
-        .sidebar-link { text-decoration: none; color: #4b5563; font-weight: 600; font-size: 16px; padding: 12px 16px; border-radius: 8px; transition: all 0.2s; background: #f9fafb; display: block; }
+        .sidebar-link { text-decoration: none; color: #4b5563; font-weight: 600; font-size: 16px; padding: 12px 16px; border-radius: 8px; transition: all 0.2s; background: #f9fafb; display: block; text-align: center; }
         .sidebar-link:hover { background: #f3f4f6; color: #1f2937; transform: translateX(-4px); }
         
-        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; align-self: flex-start; margin-bottom: 10px; color: #6b7280; padding: 8px; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; align-self: flex-start; margin-bottom: 10px; color: #6b7280; padding: 8px; border-radius: 50%; width: 40px; height: 40px; transition: all 0.2s; }
         .close-btn:hover { background: #f3f4f6; color: #1f2937; }
         
         @media (max-width: 768px) {
@@ -54,11 +53,11 @@ export default function Header() {
       `}</style>
 
       <div style={headerStyle} className="animate-header header-content">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexGrow: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexGrow: 1 }}>
           <button className="mobile-menu-btn" onClick={() => setIsSidebarOpen(true)}>☰</button>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail Logo" width="28" height="28" style={{ background: "#fff", padding: "4px", borderRadius: "6px" }} />
-            <h1 style={{ fontSize: 22, margin: 0, color: "#ffffff", fontWeight: "700" }}>Email Signature</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail Logo" width="32" height="32" style={{ background: "#fff", padding: "4px", borderRadius: "6px" }} />
+            <h1 style={{ fontSize: 20, margin: 0, color: "#ffffff", fontWeight: "700", whiteSpace: "nowrap" }}>Email Signature</h1>
           </div>
           <nav className="desktop-nav">
             <Link href="/">الرئيسية</Link>
@@ -68,22 +67,23 @@ export default function Header() {
         </div>
 
         {session && (
-          <div className="user-info-desktop" style={{ display: "flex", gap: 16, alignItems: "center" }}>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", fontWeight: "500" }}>
+          <div className="user-info-desktop" style={{ display: "flex", gap: 12, alignItems: "center", marginLeft: "auto" }}>
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", fontWeight: "500", whiteSpace: "nowrap" }}>
               {session.user.email}
             </span>
             <button 
               onClick={() => signOut()} 
               style={{
-                fontSize: 13,
-                fontWeight: "500",
+                fontSize: 12,
+                fontWeight: "600",
                 padding: "8px 16px",
                 background: "#fef2f2",
                 color: "#ea4335",
                 border: "1px solid #fca5a5",
                 borderRadius: 6,
                 cursor: "pointer",
-                transition: "all 0.2s"
+                transition: "all 0.2s",
+                whiteSpace: "nowrap"
               }}
             >
               تسجيل الخروج
