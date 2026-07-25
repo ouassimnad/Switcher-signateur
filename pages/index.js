@@ -214,10 +214,28 @@ export default function Home() {
         [dir="rtl"] .section-title::after { right: 0; left: auto; }
         .preview-container { border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; background: #fafafa; min-height: 400px; overflow: auto; transition: all 0.3s ease; display: flex; justify-content: center; }
         .preview-container:hover { background: #fff; box-shadow: inset 0 0 0 1px #e5e7eb, 0 10px 30px rgba(0,0,0,0.05); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
-        .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-        @media (max-width: 800px) {
-          .main-layout { grid-template-columns: 1fr; }
+        
+        .form-grid { 
+          display: grid; 
+          grid-template-columns: 1fr 1fr; 
+          gap: 0 16px; 
+        }
+
+        .main-layout { 
+          display: grid; 
+          grid-template-columns: 1fr 1fr; 
+          gap: 28px; 
+        }
+
+        @media (max-width: 768px) {
+          .form-grid { 
+            grid-template-columns: 1fr; 
+            gap: 0;
+          }
+          .main-layout { 
+            grid-template-columns: 1fr; 
+            gap: 20px;
+          }
         }
       `}</style>
 
@@ -392,9 +410,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-
-
 
           </div>
 
