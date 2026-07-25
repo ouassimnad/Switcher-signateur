@@ -7,23 +7,23 @@ import Footer from "../components/Footer";
 
 const FIELD_STYLE = {
   width: "100%",
-  padding: "12px 14px",
-  marginTop: "6px",
-  marginBottom: "14px",
+  padding: "10px 12px",
+  marginTop: "4px",
+  marginBottom: "10px",
   border: "1.5px solid #e5e7eb",
-  borderRadius: "8px",
-  fontSize: "14px",
+  borderRadius: "6px",
+  fontSize: "13px",
   boxSizing: "border-box",
   fontFamily: "inherit",
   backgroundColor: "#ffffff",
-  transition: "all 0.3s ease",
+  transition: "all 0.2s ease",
 };
 
 const LABEL_STYLE = {
-  fontSize: "13px",
+  fontSize: "12px",
   fontWeight: "600",
   color: "#374151",
-  marginBottom: "6px",
+  marginBottom: "4px",
   display: "block",
 };
 
@@ -64,7 +64,6 @@ export default function Home() {
   const [message, setMessage] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
-  // تحميل البيانات من localStorage عند تحميل الصفحة
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedData = localStorage.getItem(STORAGE_KEY);
@@ -170,7 +169,7 @@ export default function Home() {
     fontFamily: "'Segoe UI', Tahoma, Arial, sans-serif",
     maxWidth: "1200px",
     margin: "0 auto",
-    padding: "24px 16px",
+    padding: "16px",
     width: "100%",
   };
 
@@ -199,7 +198,7 @@ export default function Home() {
         .animate-preview { opacity: 0; animation: popIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.2s; }
 
         button { cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit; }
-        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         button:active:not(:disabled) { transform: translateY(0); }
         button:disabled { opacity: 0.6; cursor: not-allowed; }
         
@@ -207,10 +206,10 @@ export default function Home() {
         input:focus, textarea:focus { outline: none; border-color: #667eea !important; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
         
         .section { 
-          margin-bottom: 24px; 
-          padding: 24px; 
+          margin-bottom: 16px; 
+          padding: 16px; 
           background: #ffffff; 
-          border-radius: 12px; 
+          border-radius: 8px; 
           box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
           border: 1px solid #f3f4f6;
           transition: all 0.3s ease;
@@ -218,32 +217,32 @@ export default function Home() {
         .section:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
         
         .section-title { 
-          font-size: 15px; 
+          font-size: 14px; 
           font-weight: 700; 
-          margin: 0 0 18px 0;
+          margin: 0 0 12px 0;
           color: #1f2937; 
           position: relative; 
-          padding-bottom: 10px; 
+          padding-bottom: 8px; 
         }
         .section-title::after { 
           content: ''; 
           position: absolute; 
           bottom: 0; 
           left: 0; 
-          width: 40px; 
-          height: 3px; 
+          width: 35px; 
+          height: 2px; 
           background: linear-gradient(90deg, #667eea, #764ba2); 
-          border-radius: 3px; 
+          border-radius: 2px; 
         }
         [dir="rtl"] .section-title::after { right: 0; left: auto; }
         
         .preview-container { 
           border: 1.5px solid #e5e7eb; 
-          border-radius: 12px; 
-          padding: 28px; 
+          border-radius: 8px; 
+          padding: 16px; 
           background: #fafafa; 
-          min-height: 450px; 
-          max-height: 650px;
+          min-height: 350px; 
+          max-height: 550px;
           overflow: auto; 
           transition: all 0.3s ease;
           display: flex;
@@ -255,39 +254,39 @@ export default function Home() {
         .form-grid { 
           display: grid; 
           grid-template-columns: 1fr 1fr; 
-          gap: 20px 16px; 
+          gap: 12px 10px; 
         }
 
         .main-layout { 
           display: grid; 
           grid-template-columns: 1fr 1fr; 
-          gap: 28px; 
+          gap: 16px; 
         }
 
         .button-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          gap: 8px;
         }
 
         .preset-gifs {
           display: flex;
-          gap: 10px;
-          margin-top: 8px;
-          margin-bottom: 16px;
+          gap: 6px;
+          margin-top: 4px;
+          margin-bottom: 10px;
           overflow-x: auto;
-          padding-bottom: 8px;
+          padding-bottom: 4px;
           flex-wrap: wrap;
         }
 
         .preset-gif-item {
-          width: 36px;
-          height: 36px;
-          border-radius: 8px;
+          width: 30px;
+          height: 30px;
+          border-radius: 6px;
           cursor: pointer;
           border: 2px solid #e5e7eb;
           transition: all 0.2s ease;
-          padding: 4px;
+          padding: 2px;
           background: white;
           display: flex;
           align-items: center;
@@ -297,7 +296,7 @@ export default function Home() {
 
         .preset-gif-item:hover {
           border-color: #667eea;
-          box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+          box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
         }
 
         .preset-gif-item.active {
@@ -308,82 +307,83 @@ export default function Home() {
         @media (max-width: 1024px) {
           .main-layout { 
             grid-template-columns: 1fr; 
-            gap: 24px;
+            gap: 12px;
           }
           
           .form-grid {
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 10px;
           }
 
           .button-grid {
             grid-template-columns: 1fr;
+            gap: 6px;
           }
         }
 
         @media (max-width: 768px) {
           .section {
-            padding: 18px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 12px;
           }
 
           .form-grid { 
             grid-template-columns: 1fr; 
-            gap: 14px;
+            gap: 10px;
           }
 
           .main-layout { 
             grid-template-columns: 1fr; 
-            gap: 18px;
-          }
-
-          .preview-container {
-            min-height: 350px;
-            max-height: 500px;
-            padding: 20px;
-          }
-
-          .section-title {
-            font-size: 14px;
-            margin-bottom: 14px;
-            padding-bottom: 8px;
-          }
-
-          .button-grid {
-            grid-template-columns: 1fr;
-            gap: 10px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .section {
-            padding: 16px;
-            margin-bottom: 16px;
-          }
-
-          .form-grid {
-            grid-template-columns: 1fr;
             gap: 12px;
           }
 
           .preview-container {
             min-height: 300px;
-            max-height: 400px;
-            padding: 16px;
+            max-height: 450px;
+            padding: 12px;
           }
 
           .section-title {
             font-size: 13px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
           }
 
-          .preset-gifs {
+          .button-grid {
+            grid-template-columns: 1fr;
+            gap: 6px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .section {
+            padding: 10px;
+            margin-bottom: 10px;
+          }
+
+          .form-grid {
+            grid-template-columns: 1fr;
             gap: 8px;
           }
 
+          .preview-container {
+            min-height: 250px;
+            max-height: 350px;
+            padding: 10px;
+          }
+
+          .section-title {
+            font-size: 12px;
+            margin-bottom: 8px;
+          }
+
+          .preset-gifs {
+            gap: 4px;
+          }
+
           .preset-gif-item {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
           }
         }
       `}</style>
@@ -391,8 +391,8 @@ export default function Home() {
       <Header />
 
       {status === "loading" && (
-        <div style={{ textAlign: "center", padding: "60px 20px" }}>
-          <p style={{ color: "#6b7280", fontSize: "16px" }}>⏳ جاري التحميل...</p>
+        <div style={{ textAlign: "center", padding: "40px 20px" }}>
+          <p style={{ color: "#6b7280", fontSize: "14px" }}>⏳ جاري التحميل...</p>
         </div>
       )}
 
@@ -406,31 +406,31 @@ export default function Home() {
           textAlign: "center",
           padding: "40px 20px",
           background: "#ffffff",
-          borderRadius: "16px",
+          borderRadius: "12px",
           boxShadow: "0 10px 40px rgba(0,0,0,0.03)",
           border: "1px solid #f3f4f6",
-          marginTop: "40px"
+          marginTop: "20px"
         }} className="animate-section-1">
           
           <div style={{
-            width: "80px",
-            height: "80px",
+            width: "70px",
+            height: "70px",
             background: "#f0f4ff",
-            borderRadius: "16px",
+            borderRadius: "12px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: "28px",
+            marginBottom: "20px",
             boxShadow: "0 4px 20px rgba(102, 126, 234, 0.1)"
           }}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail Logo" width="48" height="48" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail Logo" width="40" height="40" />
           </div>
 
-          <h2 style={{ fontSize: "32px", fontWeight: "700", color: "#111827", margin: "0 0 16px 0", letterSpacing: "-0.02em" }}>
+          <h2 style={{ fontSize: "28px", fontWeight: "700", color: "#111827", margin: "0 0 12px 0", letterSpacing: "-0.02em" }}>
             مرحباً بك في Email Signature
           </h2>
           
-          <p style={{ color: "#4b5563", fontSize: "16px", marginBottom: "40px", maxWidth: "540px", lineHeight: "1.6" }}>
+          <p style={{ color: "#4b5563", fontSize: "14px", marginBottom: "32px", maxWidth: "480px", lineHeight: "1.6" }}>
             أنشئ توقيعاً احترافياً لبريدك الإلكتروني واربطه مباشرة بحساب Gmail الخاص بك بنقرة واحدة.
           </p>
 
@@ -440,22 +440,22 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "12px",
-              padding: "14px 32px",
-              fontSize: "15px",
+              gap: "10px",
+              padding: "12px 28px",
+              fontSize: "14px",
               fontFamily: "'Inter', 'Segoe UI', sans-serif",
               fontWeight: "600",
               background: "#1f1f1f",
               color: "#ffffff",
               border: "1px solid #3c4043",
-              borderRadius: "8px",
+              borderRadius: "6px",
               cursor: "pointer",
               transition: "all 0.3s ease",
             }}
             onMouseOver={(e) => { 
               e.currentTarget.style.background = "#2a2a2a"; 
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.15)"; 
+              e.currentTarget.style.transform = "translateY(-1px)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)"; 
             }}
             onMouseOut={(e) => { 
               e.currentTarget.style.background = "#1f1f1f"; 
@@ -463,7 +463,7 @@ export default function Home() {
               e.currentTarget.style.boxShadow = "none"; 
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
@@ -483,45 +483,44 @@ export default function Home() {
             <div className="section animate-section-1">
               <h3 className="section-title">اتجاه النص</h3>
               <div className="button-grid">
-                <button onClick={() => handleDirectionChange("rtl")} style={{ ...FIELD_STYLE, border: direction === "rtl" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "rtl" ? "#f0f4ff" : "#fff", fontWeight: direction === "rtl" ? "600" : "500", color: direction === "rtl" ? "#667eea" : "#6b7280", marginTop: 0, marginBottom: 0 }}>🇸🇦 RTL (عربي)</button>
-                <button onClick={() => handleDirectionChange("ltr")} style={{ ...FIELD_STYLE, border: direction === "ltr" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "ltr" ? "#f0f4ff" : "#fff", fontWeight: direction === "ltr" ? "600" : "500", color: direction === "ltr" ? "#667eea" : "#6b7280", marginTop: 0, marginBottom: 0 }}>🇬🇧 LTR (English)</button>
+                <button onClick={() => handleDirectionChange("rtl")} style={{ ...FIELD_STYLE, border: direction === "rtl" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "rtl" ? "#f0f4ff" : "#fff", fontWeight: direction === "rtl" ? "600" : "500", color: direction === "rtl" ? "#667eea" : "#6b7280", marginTop: 0, marginBottom: 0, padding: "8px 10px", fontSize: "12px" }}>🇸🇦 RTL</button>
+                <button onClick={() => handleDirectionChange("ltr")} style={{ ...FIELD_STYLE, border: direction === "ltr" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "ltr" ? "#f0f4ff" : "#fff", fontWeight: direction === "ltr" ? "600" : "500", color: direction === "ltr" ? "#667eea" : "#6b7280", marginTop: 0, marginBottom: 0, padding: "8px 10px", fontSize: "12px" }}>🇬🇧 LTR</button>
               </div>
             </div>
 
             {/* Form Fields */}
             <div className="section animate-section-1">
-              <h3 className="section-title">معلوماتك الشخصية</h3>
+              <h3 className="section-title">البيانات الشخصية</h3>
               
               <div className="form-grid">
                 <div>
-                  <label style={LABEL_STYLE}>الاسم الكامل</label>
-                  <input style={FIELD_STYLE} value={data.name} onChange={(e) => update("name", e.target.value)} placeholder="مثال: أحمد محمد" />
+                  <label style={LABEL_STYLE}>الاسم</label>
+                  <input style={FIELD_STYLE} value={data.name} onChange={(e) => update("name", e.target.value)} placeholder="أحمد محمد" />
                 </div>
                 <div>
-                  <label style={LABEL_STYLE}>المسمى الوظيفي</label>
-                  <input style={FIELD_STYLE} value={data.title} onChange={(e) => update("title", e.target.value)} placeholder="مثال: مهندس برمجيات" />
+                  <label style={LABEL_STYLE}>الوظيفة</label>
+                  <input style={FIELD_STYLE} value={data.title} onChange={(e) => update("title", e.target.value)} placeholder="مهندس برمجيات" />
                 </div>
                 <div>
-                  <label style={LABEL_STYLE}>رقم الهاتف</label>
-                  <input style={FIELD_STYLE} value={data.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+213 5XX XX XX XX" type="tel" />
+                  <label style={LABEL_STYLE}>الهاتف</label>
+                  <input style={FIELD_STYLE} value={data.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+213 563413607" type="tel" />
                 </div>
                 <div>
-                  <label style={LABEL_STYLE}>البريد الإلكتروني</label>
-                  <input style={FIELD_STYLE} value={data.email} onChange={(e) => update("email", e.target.value)} placeholder="your@email.com" type="email" />
+                  <label style={LABEL_STYLE}>البريد</label>
+                  <input style={FIELD_STYLE} value={data.email} onChange={(e) => update("email", e.target.value)} placeholder="email@example.com" type="email" />
                 </div>
                 <div>
                   <label style={LABEL_STYLE}>الموقع</label>
                   <input style={FIELD_STYLE} value={data.website} onChange={(e) => update("website", e.target.value)} placeholder="example.com" />
                 </div>
                 <div>
-                  <label style={LABEL_STYLE}>رابط اللوغو</label>
-                  <input style={FIELD_STYLE} value={data.logoUrl} onChange={(e) => update("logoUrl", e.target.value)} placeholder="https://example.com/logo.png" />
-                  <p style={{ fontSize: "12px", color: "#9ca3af", margin: "0 0 12px 0", fontWeight: "500" }}>ℹ️ يجب أن يكون مستضافاً (HTTPS)</p>
+                  <label style={LABEL_STYLE}>اللوغو</label>
+                  <input style={FIELD_STYLE} value={data.logoUrl} onChange={(e) => update("logoUrl", e.target.value)} placeholder="https://..." />
                 </div>
               </div>
 
-              <label style={LABEL_STYLE}>صورة GIF متحركة (اختياري)</label>
-              <input style={FIELD_STYLE} value={data.dotUrl} onChange={(e) => update("dotUrl", e.target.value)} placeholder="https://example.com/dot.gif" />
+              <label style={LABEL_STYLE}>صورة GIF</label>
+              <input style={FIELD_STYLE} value={data.dotUrl} onChange={(e) => update("dotUrl", e.target.value)} placeholder="https://..." />
               <div className="preset-gifs">
                 {PRESET_GIFS.map((gif) => (
                   <button
@@ -529,11 +528,8 @@ export default function Home() {
                     onClick={() => update("dotUrl", gif.url)}
                     className={`preset-gif-item ${data.dotUrl === gif.url ? 'active' : ''}`}
                     title={gif.id}
-                    style={{
-                      cursor: "pointer",
-                    }}
                   >
-                    <img src={gif.url} alt={gif.id} width={24} height={24} style={{ display: "block" }} />
+                    <img src={gif.url} alt={gif.id} width={20} height={20} style={{ display: "block" }} />
                   </button>
                 ))}
                 <button 
@@ -541,7 +537,8 @@ export default function Home() {
                   className="preset-gif-item"
                   style={{ 
                     borderStyle: "dashed",
-                    background: data.dotUrl === "" ? "#f0f4ff" : "#fff"
+                    background: data.dotUrl === "" ? "#f0f4ff" : "#fff",
+                    fontWeight: "bold"
                   }}
                   title="إزالة"
                 >
@@ -552,7 +549,7 @@ export default function Home() {
 
             {/* Social Media */}
             <div className="section animate-section-2">
-              <h3 className="section-title">وسائل التواصل (اختياري)</h3>
+              <h3 className="section-title">التواصل (اختياري)</h3>
               <div className="form-grid">
                 <div>
                   <label style={LABEL_STYLE}>Instagram</label>
@@ -568,15 +565,15 @@ export default function Home() {
                 </div>
                 <div>
                   <label style={LABEL_STYLE}>Facebook</label>
-                  <input style={FIELD_STYLE} value={data.facebook} onChange={(e) => update("facebook", e.target.value)} placeholder="https://facebook.com/..." />
+                  <input style={FIELD_STYLE} value={data.facebook} onChange={(e) => update("facebook", e.target.value)} placeholder="https://..." />
                 </div>
                 <div>
                   <label style={LABEL_STYLE}>Snapchat</label>
-                  <input style={FIELD_STYLE} value={data.snapchat} onChange={(e) => update("snapchat", e.target.value)} placeholder="اسم المستخدم أو رابط" />
+                  <input style={FIELD_STYLE} value={data.snapchat} onChange={(e) => update("snapchat", e.target.value)} placeholder="username" />
                 </div>
                 <div>
                   <label style={LABEL_STYLE}>TikTok</label>
-                  <input style={FIELD_STYLE} value={data.tiktok} onChange={(e) => update("tiktok", e.target.value)} placeholder="اسم المستخدم أو رابط" />
+                  <input style={FIELD_STYLE} value={data.tiktok} onChange={(e) => update("tiktok", e.target.value)} placeholder="username" />
                 </div>
               </div>
             </div>
@@ -586,7 +583,7 @@ export default function Home() {
           {/* Right Column - Preview & Actions */}
           <div className="animate-preview">
             <div className="section">
-              <h3 className="section-title">📋 معاينة التوقيع</h3>
+              <h3 className="section-title">📋 المعاينة</h3>
               <div className="preview-container">
                 <div dangerouslySetInnerHTML={{ __html: html }} />
               </div>
@@ -594,8 +591,8 @@ export default function Home() {
 
             {/* Template Selection */}
             <div className="section animate-section-3">
-              <h3 className="section-title">اختر التصميم</h3>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+              <h3 className="section-title">التصميم</h3>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                 {TEMPLATES.map((t) => (
                   <button 
                     key={t.id} 
@@ -608,8 +605,8 @@ export default function Home() {
                       color: templateId === t.id ? "#667eea" : "#6b7280",
                       marginTop: 0,
                       marginBottom: 0,
-                      padding: "10px 12px",
-                      fontSize: "13px"
+                      padding: "8px 10px",
+                      fontSize: "11px"
                     }}
                   >
                     {t.label}
@@ -625,68 +622,70 @@ export default function Home() {
                 disabled={busy}
                 style={{
                   width: "100%",
-                  padding: "14px 24px",
-                  fontSize: "15px",
+                  padding: "10px 16px",
+                  fontSize: "13px",
                   fontWeight: "600",
                   background: busy ? "#d1d5db" : "#667eea",
                   color: "#fff",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "6px",
                   cursor: busy ? "not-allowed" : "pointer",
                   opacity: busy ? 0.6 : 1,
-                  marginBottom: "12px",
+                  marginBottom: "8px",
                   transition: "all 0.3s ease"
                 }}
               >
-                {busy ? "⏳ جاري التفعيل..." : "🚀 تفعيل على Gmail"}
+                {busy ? "⏳ جاري..." : "🚀 تفعيل"}
               </button>
 
               <button
                 onClick={clearData}
                 style={{
                   width: "100%",
-                  padding: "12px 24px",
-                  fontSize: "14px",
+                  padding: "10px 16px",
+                  fontSize: "12px",
                   fontWeight: "500",
                   background: "#fef2f2",
                   color: "#dc2626",
                   border: "1.5px solid #fecaca",
-                  borderRadius: "8px",
+                  borderRadius: "6px",
                   cursor: "pointer",
                   transition: "all 0.3s ease"
                 }}
               >
-                🗑️ حذف البيانات المحفوظة
+                🗑️ حذف
               </button>
 
               {message && (
                 <p style={{
-                  marginTop: "14px",
-                  padding: "12px 14px",
-                  borderRadius: "8px",
+                  marginTop: "10px",
+                  padding: "10px 12px",
+                  borderRadius: "6px",
                   background: message.ok ? "#f0fdf4" : "#fef2f2",
                   color: message.ok ? "#059669" : "#dc2626",
-                  fontSize: "13px",
+                  fontSize: "12px",
                   textAlign: "center",
                   border: `1.5px solid ${message.ok ? "#bbf7d0" : "#fecaca"}`,
-                  fontWeight: "500"
+                  fontWeight: "500",
+                  margin: 0
                 }}>
                   {message.text}
                 </p>
               )}
 
               <p style={{
-                marginTop: "16px",
-                fontSize: "12px",
+                marginTop: "10px",
+                fontSize: "11px",
                 color: "#6b7280",
-                padding: "12px 14px",
+                padding: "8px 10px",
                 background: "#f9fafb",
-                borderRadius: "8px",
+                borderRadius: "6px",
                 textAlign: "center",
                 border: "1px solid #f3f4f6",
-                fontWeight: "500"
+                fontWeight: "500",
+                margin: 0
               }}>
-                💾 البيانات تُحفظ تلقائياً أثناء الكتابة
+                💾 حفظ تلقائي
               </p>
             </div>
           </div>
