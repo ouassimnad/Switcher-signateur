@@ -271,7 +271,7 @@ export default function Home() {
 
         .preset-gifs {
           display: flex;
-          gap: 6px;
+          gap: 8px;
           margin-top: 4px;
           margin-bottom: 10px;
           overflow-x: auto;
@@ -280,13 +280,13 @@ export default function Home() {
         }
 
         .preset-gif-item {
-          width: 30px;
-          height: 30px;
-          border-radius: 6px;
+          width: 38px;
+          height: 38px;
+          border-radius: 12px;
           cursor: pointer;
-          border: 2px solid #e5e7eb;
+          border: 2.5px solid #a78bfa;
           transition: all 0.2s ease;
-          padding: 2px;
+          padding: 3px;
           background: white;
           display: flex;
           align-items: center;
@@ -295,13 +295,14 @@ export default function Home() {
         }
 
         .preset-gif-item:hover {
-          border-color: #667eea;
-          box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
+          border-color: #8b5cf6;
+          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+          background: #f5f3ff;
         }
 
         .preset-gif-item.active {
-          border-color: #667eea;
-          background: #f0f4ff;
+          border-color: #8b5cf6;
+          background: #ede9fe;
         }
 
         @media (max-width: 1024px) {
@@ -378,12 +379,13 @@ export default function Home() {
           }
 
           .preset-gifs {
-            gap: 4px;
+            gap: 6px;
           }
 
           .preset-gif-item {
-            width: 28px;
-            height: 28px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
           }
         }
       `}</style>
@@ -483,8 +485,8 @@ export default function Home() {
             <div className="section animate-section-1">
               <h3 className="section-title">اتجاه النص</h3>
               <div className="button-grid">
-                <button onClick={() => handleDirectionChange("rtl")} style={{ ...FIELD_STYLE, border: direction === "rtl" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "rtl" ? "#f0f4ff" : "#fff", fontWeight: direction === "rtl" ? "600" : "500", color: direction === "rtl" ? "#667eea" : "#6b7280", marginTop: 0, marginBottom: 0, padding: "8px 10px", fontSize: "12px" }}>🇸🇦 RTL</button>
-                <button onClick={() => handleDirectionChange("ltr")} style={{ ...FIELD_STYLE, border: direction === "ltr" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "ltr" ? "#f0f4ff" : "#fff", fontWeight: direction === "ltr" ? "600" : "500", color: direction === "ltr" ? "#667eea" : "#6b7280", marginTop: 0, marginBottom: 0, padding: "8px 10px", fontSize: "12px" }}>🇬🇧 LTR</button>
+                <button onClick={() => handleDirectionChange("rtl")} style={{ ...FIELD_STYLE, border: direction === "rtl" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "rtl" ? "#f0f4ff" : "#fff" }}>RTL</button>
+                <button onClick={() => handleDirectionChange("ltr")} style={{ ...FIELD_STYLE, border: direction === "ltr" ? "2px solid #667eea" : "1.5px solid #e5e7eb", background: direction === "ltr" ? "#f0f4ff" : "#fff" }}>LTR</button>
               </div>
             </div>
 
@@ -537,7 +539,7 @@ export default function Home() {
                   className="preset-gif-item"
                   style={{ 
                     borderStyle: "dashed",
-                    background: data.dotUrl === "" ? "#f0f4ff" : "#fff",
+                    background: data.dotUrl === "" ? "#ede9fe" : "#fff",
                     fontWeight: "bold"
                   }}
                   title="إزالة"
